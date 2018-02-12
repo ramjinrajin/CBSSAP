@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "DeleteCategory";
+    Layout = "~/Views/Master/layout.cshtml";
+}
+<br /><br /><br /><br /> 
+<h2>DeleteCategory</h2>
+<br /> 
+<br /> 
+
+@*@foreach (var Category in ViewBag.Categories)
+{
+    <option>@Category</option>
+
+}*@
+
+
+<table id="mytable" class="   ">
+
+    <tr>
+        <th>Category</th>
+        <th>Delete</th>
+
+    </tr>
+  
+         
+            @foreach (var Category in ViewBag.Categories)
+            {
+                <tr>
+                    <td id="TitleValue">@Category</td>
+                    <td><a class="glyphicon glyphicon-trash" href="~/Home/DeleteCategory?Category=@Category"> </a></td>
+                    @*<td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" value="@Category"  ><span class="glyphicon glyphicon-trash"></span></button></p></td>*@
+                </tr>
+            }
+
+               
+
+</table>

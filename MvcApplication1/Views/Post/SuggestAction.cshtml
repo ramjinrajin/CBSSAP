@@ -1,0 +1,122 @@
+﻿@model MvcApplication1.Models.Property.InzPost
+
+@{
+    ViewBag.Title = "SuggestAction";
+    Layout = "~/Views/Master/layout.cshtml";
+}
+
+
+<div class='container'>
+    <h2>SuggestAction</h2>
+
+
+    <div class="row">
+        <br><br>
+        <div class="error-notice">
+            <div class="oaerror danger" id="Error" style="display: none;">
+                <strong>Error</strong> - The user is not interested in the category
+            </div>
+            <div class="oaerror warning" id="Warning" style="display: none;">
+                <strong>Warning</strong> - You cant suggest your own post !!!
+            </div>
+            <div class="oaerror info" id="Info" style="display: none;">
+                <strong>Info</strong> - Your post successfully added. It will be approved shortly
+            </div>
+            <div class="oaerror success" id="Sucess" style="display: none;">
+                <strong>Sucess!</strong> - User suggestion request accepted
+            </div>
+            <div class="oaerror success" id="UserNotExists" style="display: none;">
+                <strong>Error!</strong> - No user registered with the username
+            </div>
+        </div>
+    </div>
+
+
+    <div class='col-sm-5 col-sm-offset-1'>
+        <div class='well'>
+            <form method="post" action="SuggestAction">
+                <div class='row'>
+                    <div class='col-sm-10'>
+                        <div class='form-group'>
+                            <label for='fname'>Suggest friend emailId :</label>
+                            <input type='text' name='Email' class='form-control' />
+                            <input type="hidden" name="PostId" value="@Model.PostId" />
+                        </div>
+                        <div class='text-right'>
+                            <input type='submit' id="btnSubmit" class='btn btn-primary' value='Submit' />
+                        </div>
+
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+
+<link href="~/assets/login/css/loginpage.css" rel="stylesheet" />
+<script src="~/assets/login/js/jquery-3.0.0.js"></script>
+<script src="~/assets/login/js/loginSwitcher.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="~/assets/js/jquery.min.js"></script>
+<script src="~/assets/js/skel.min.js"></script>
+<script src="~/assets/js/util.js"></script>
+<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+<script src="~/assets/js/main.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+
+
+        var val = '@Html.Raw((string)TempData["AlertMessage"])';
+
+        if (val == "User suggestion request accepted") {
+            $("#Sucess").fadeIn(300);
+            $("#Sucess").delay(2000).fadeOut(500);
+        }
+        else
+            if (val == "The user is not interested in the category") {
+                if (val != "") {
+                    $("#Error").fadeIn(300);
+                    $("#Error").delay(2000).fadeOut(500);
+                }
+            }
+            else if (val == "You cant suggest your own post !!!") {
+                $("#Warning").fadeIn(300);
+                $("#Warning").delay(2000).fadeOut(500);
+            }
+            else if (val == "No user registered with the username") {
+                $("#UserNotExists").fadeIn(300);
+                $("#UserNotExists").delay(2000).fadeOut(500);
+            }
+
+
+
+        $('#register-submit').click(function () {
+
+            var password = $('#confirm-password2').val();
+            var Cnfpassword = $('#confirm-password').val();
+
+            if (password != Cnfpassword) {
+                $("form").submit(function (e) {
+                    e.preventDefault();
+                });
+                $("#Error").fadeIn(300);
+                $("#Error").delay(2000).fadeOut(500);
+            }
+            else
+                if (val == "Error") {
+                    if (val != "") {
+                        $("#Error").fadeIn(300);
+                        $("#Error").delay(2000).fadeOut(500);
+                    }
+                }
+        });
+
+    });
+</script>

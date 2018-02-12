@@ -1,0 +1,236 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Prism by TEMPLATED</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+    <link rel="stylesheet" href="~/assets/css/main.css" />
+    <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0px;">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="~/home/index">Cloud OTP FileShare </a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                    <li>
+                        <a href="~/home/index">Home</a>
+                    </li>
+                    <li>
+                        <a href="~/Post/index">File</a>
+                    </li>
+                    <li>
+                        <a href="~/Post/managepost">Manage File</a>
+                    </li>
+                    <li>
+                        <a href="~/Home/Category">Add Category</a>
+                    </li>
+                    <li>
+                        <a href="~/Home/AllCategory">Delete Category</a>
+                    </li>
+                    <li>
+                        <a href="~/Post/managepost">Manage File</a>
+                    </li>
+
+                    @if (HttpContext.Current.User.Identity.Name != "" && ViewBag.Title != "login")
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Hi @HttpContext.Current.User.Identity.Name!<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                 
+                                @if (HttpContext.Current.User.Identity.Name == "admin")
+                                {
+
+                                    <li>
+                                        <a href="~/UserSettings/Index">User Settings</a>
+                                    </li>
+
+
+                                }
+
+                                <li><a href="~/Login/logout">Signout</a></li>
+                            </ul>
+                        </li>
+                        @*<li>
+                                <a class="btn" href="/ControlPanel/logout">Sign out</a>
+                            </li>*@
+                    }
+                </ul>
+
+
+
+
+
+
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+    <!-- Banner -->
+    <section id="banner">
+        <div class="inner split">
+            <section>
+                <h2>Share the file with multiple user OTP security using<a href="#"> FILE STREAM</a></h2>
+            </section>
+            <section>
+                <p>Unlimited file upload </p>
+                <ul class="actions">
+                    <li><a href="~/Post/index"class="button special">Get started</a></li>
+                </ul>
+            </section>
+        </div>
+    </section>
+    <!-- One -->
+    <section id="one" class="wrapper">
+        @foreach (var Item in Model)
+        {
+            if (!Item.NoPost)
+            {
+                <div class="inner split">
+                    <section>
+                        <div class="image">
+                            <img src="~/PostImage/@Item.FileName" style="width :300px;height:250px;" alt="" />
+                        </div>
+                        <h2>@Item.Title</h2>
+                        <p>@Item.Description</p>
+                        <ul class="actions">
+                            <li><a target="_blank" href="@Item.ReferenceURL" class="button alt">Learn more</a></li>
+                        </ul>
+                    </section>
+                    <section>
+                        <ul class="checklist">
+                            @if (Item.IsApproved == 1)
+                            {
+                                <li>Approved by editorial office</li>
+                            }
+                            else
+                            {
+                                <li>Not approved by editorial office</li>
+                            }
+
+                            <li>@Item.Category</li>
+                            <li>@Item.SubDescription</li>
+                            <li>Verified user</li>
+                            <li>Source:@Item.ReferenceURL</li>
+                        </ul>
+                    </section>
+                </div>
+                <hr />
+            }
+
+
+        }
+    </section>
+    <section id="two" class="wrapper style2 alt">
+        <div class="inner">
+
+            @foreach (var Item in Model)
+            {
+
+                foreach (var Post in Item.ListPost)
+                {
+
+
+                    <div class="spotlight">
+                        <div class="image">
+                            <img style="width :300px;height:250px;" src="~/PostImage/@Post.FileName" alt="" />
+                        </div>
+                        <div class="content">
+                            <h3>@Post.Title </h3>
+                            <p>@Post.SubDescription </p>
+                            <ul class="actions">
+                                <li><a href="~/Home/SharePost?PostId=@Post.PostId" class="button alt">Accept Request</a></li>
+                                <li><a href="~/Home/RejectPost?PostId=@Post.PostId" class="button alt">Reject Request</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+
+
+
+
+                }
+                break;
+
+
+            }
+
+        </div>
+    </section>
+
+    <!-- Two -->
+    <!-- Contact -->
+    <section id="contact" class="wrapper">
+        <div class="inner split">
+            <section>
+                <!--  <h2>Orci malesuada</h2>
+                  <p>Morbi pharetra vitae felis placerat pharetra. Nulla risus orci, dapibus id malesuada et nec, malesuada quis pellentesque eget.</p>
+                  <form action="#" class="alt" method="POST">
+                      <div class="row uniform">
+                          <div class="6u 12u$(xsmall)">
+                              <input name="name" placeholder="Name" type="text">
+                          </div>
+                          <div class="6u$ 12u$(xsmall)">
+                              <input name="email" placeholder="Email" type="email">
+                          </div>
+                          <div class="12u$">
+                              <textarea name="message" placeholder="Message" rows="4"></textarea>
+                          </div>
+                      </div>
+                      <ul class="actions">
+                          <li>
+                              <input class="alt" value="Send message" type="submit"></li>
+                      </ul>
+                  </form> -->
+            </section>
+            <section>
+                <ul class="contact">
+                    <li class="fa-twitter"><a href="#">twitter.com/untitled-tld</a></li>
+                    <li class="fa-facebook"><a href="#">facebook.com/untitled-tld</a></li>
+                    <li class="fa-instagram"><a href="#">instagram.com/untitled-tld</a></li>
+                    <li class="fa-envelope"><a href="#">information@untitled.tld</a></li>
+                    <li class="fa-home">
+                        1234 Somewhere Road Suite 9823<br />
+                        Greenvilla, KL 00000-0000
+                    </li>
+                </ul>
+            </section>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="copyright">
+            &copy; Untitled. All rights reserved. Images: <a href="http://unsplash.com">Unsplash</a>. Design: <a href="http://templated.co">TEMPLATED</a>.
+        </div>
+    </footer>
+    <!-- Scripts -->
+    <script src="~/assets/js/jquery.min.js"></script>
+    <script src="~/assets/js/skel.min.js"></script>
+    <script src="~/assets/js/util.js"></script>
+    <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+    <script src="~/assets/js/main.js"></script>
+</body>
+</html>

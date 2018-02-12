@@ -1,0 +1,243 @@
+﻿@{
+    ViewBag.Title = "login";
+    Layout = "~/Views/Master/layout.cshtml";
+}
+
+    
+
+
+
+ 
+
+<div class="row" style="padding-top: 10%;">
+
+
+    <div id="Sucess" class="alert alert-success" style="display: none;">
+        <strong>Sucess!</strong> Registration successful
+    </div>
+
+    <div id="Exists" class="alert alert-warning" style="display: none;">
+        <strong>Failed!</strong> Email ID or Username already registered
+    </div>
+
+    <div id="Error" class="alert alert-danger" style="display: none;">
+        <strong>Failed!</strong> Confirm password doesnt match
+    </div>
+
+
+    <div id="Invalid" class="alert alert-danger" style="display: none;">
+        <strong>Failed!</strong> Invalid username or password or your account might be blocked
+    </div>
+
+
+
+    <div class="col-md-6 col-md-offset-3">
+        <div class="panel panel-login">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <a href="#" class="active" id="login-form-link">Login</a>
+                    </div>
+                    <div class="col-xs-6">
+                        <a href="#" id="register-form-link">Register</a>
+                    </div>
+                </div>
+                <hr>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                         <form id="login-form" method="post" role="form" style="display: block;"> 
+                       
+                            <div class="form-group">
+                                <input type="text" name="User name" id="User name" tabindex="1" class="form-control" placeholder="Username" value="">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
+                            </div>
+                            <div class="form-group text-center">
+                                <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
+                                <label for="remember"> Remember Me</label>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-6 col-sm-offset-3">
+                                        <input type="submit" name="login-submit" formmethod="post" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="text-center">
+                                            @*<a href="#" tabindex="5" class="forgot-password">Forgot Password?</a>*@
+                                            @*<a href="#" data-target="#pwdModal" data-toggle="modal" class="">Forgot my password ?</a>*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                         
+                        </form> 
+                        <form id="register-form" action="~/Login/RegisterUSer" method="post" role="form" style="display: none;">
+                            <div class="form-group">
+                                <input type="text" name="username" id="username" tabindex="1" class="form-control" required="required" placeholder="Username" value="">
+                            </div>
+                            <div class="form-group">
+                                <input type="email" name="email" id="email" tabindex="1" class="form-control" required="required" placeholder="Email Address" value="">
+                            </div>
+                            <div class="form-group">
+                                @*<input type="password" name="password" id="password" tabindex="2" required="required"  class="form-control" placeholder="Password">*@
+                                <input type="password" name="confirm-password2" id="confirm-password2" required="required" tabindex="2" class="form-control" placeholder="Password">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" name="confirm-password" id="confirm-password" required="required" tabindex="2" class="form-control" placeholder="Confirm Password">
+                            </div>
+                            <div class='form-group'>
+                                <label for='subject'>Expertise in :</label>
+                                <select name='Category' class='form-control'>
+                                    <option>Space Research</option>
+                                    <option>Technology</option>
+                                    <option>Medical Research</option>
+                                    <option>Engineering</option>
+                                    <option>Bio-Medical</option>
+                                    <option>Neurology</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-6 col-sm-offset-3">
+                                        <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Register Now">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--modal-->
+<div id="pwdModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h1 class="text-center">Reset Password</h1>
+
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="text-center">
+                                <p class="">
+                                </p><div>
+                                    <span style="line-height: 1.42857;">Lost your password?</span>
+                                    <br>
+                                </div>
+                                <div>
+                                    <br>
+                                </div>
+                                <div>
+                                    Type in your username and hit that Request Password Reset button, an email
+                                    will be sent to the email you provided us when you signed up.
+                                </div>
+                                <div>
+                                    <br>
+                                </div>
+                                <div>
+                                    If you do not receive an email within an hour of you requesting a password
+                                    reset, please contact support.
+                                </div>
+                                <div>
+                                    <br>
+                                </div>
+                                <div>Have a nice day!</div>
+                                <div>
+                                    <br>
+                                </div>
+                                <div>*Your Username is usually your Minecraft username.*</div>
+                                <p></p>
+                                <div class="panel-body">
+                                    <fieldset>
+                                        <div class="form-group">
+                                            <input class="form-control input-lg" placeholder="Username" name="usermame" type="email">
+                                        </div>
+                                        <input class="btn btn-lg btn-primary btn-block" value="Request Password Reset" type="submit">
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="~/assets/login/css/loginpage.css" rel="stylesheet" />
+<script src="~/assets/login/js/jquery-3.0.0.js"></script>
+<script src="~/assets/login/js/loginSwitcher.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+       
+
+        var val = '@Html.Raw((string)TempData["AlertMessage"])';
+
+        if (val == "Sucess") {
+            $("#Sucess").fadeIn(300);
+            $("#Sucess").delay(2000).fadeOut(500);
+        }
+        else
+            if (val == "Exists") {
+                if (val != "") {
+                    $("#Exists").fadeIn(300);
+                    $("#Exists").delay(2000).fadeOut(500);
+                }
+            }
+            else if (val == "Invalid") {
+                $("#Invalid").fadeIn(300);
+                $("#Invalid").delay(2000).fadeOut(500);
+            }
+
+
+
+        $('#register-submit').click(function () {
+
+            var password = $('#confirm-password2').val();
+            var Cnfpassword = $('#confirm-password').val();
+
+            if (password != Cnfpassword) {
+                $("form").submit(function (e) {
+                    e.preventDefault();
+                });
+                $("#Error").fadeIn(300);
+                $("#Error").delay(2000).fadeOut(500);
+            }
+            else
+                if (val == "Error") {
+                    if (val != "") {
+                        $("#Error").fadeIn(300);
+                        $("#Error").delay(2000).fadeOut(500);
+                    }
+                }
+        });
+
+
+
+
+
+
+
+    });
+</script>
+
