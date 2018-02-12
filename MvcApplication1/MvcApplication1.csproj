@@ -124,6 +124,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="App_Data\OTPFileShare.sql" />
     <Content Include="assets\css\font-awesome.min.css" />
     <Content Include="assets\css\ie9.css" />
     <Content Include="assets\css\images\overlay.png" />
@@ -165,7 +166,6 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="PostImage\" />
   </ItemGroup>
   <ItemGroup>
