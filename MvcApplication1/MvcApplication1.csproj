@@ -105,6 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Backend\DbConnect.cs" />
+    <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PostController.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\File\FileModel.cs" />
     <Compile Include="Models\Post\Application\PostService.cs" />
     <Compile Include="Models\Post\Data\ConnectSQL.cs" />
     <Compile Include="Models\Post\Data\PostDataLayer.cs" />
@@ -137,6 +139,23 @@
     <Content Include="assets\js\main.js" />
     <Content Include="assets\js\skel.min.js" />
     <Content Include="assets\js\util.js" />
+    <Content Include="Contents\Logo\InzenjerLogo.png" />
+    <Content Include="Contents\Offline CDN\bootstrap.css" />
+    <Content Include="Contents\Offline CDN\gijgo.min.css" />
+    <Content Include="Contents\Scripts\bootstrap.min.js.js" />
+    <Content Include="Contents\Scripts\gijgo.min.js" />
+    <Content Include="Contents\Scripts\jquery.min.js" />
+    <Content Include="Contents\Scripts\_loginScript.js" />
+    <Content Include="Contents\Scripts\_masterAnimate.js" />
+    <Content Include="Contents\Scripts\_messageAlertHandler.js" />
+    <Content Include="Contents\Style\ImpersonationStyle.css" />
+    <Content Include="Contents\Style\NotificationStyle.css" />
+    <Content Include="Contents\Style\_alertStyle.css" />
+    <Content Include="Contents\Style\_homeStyle.css" />
+    <Content Include="Contents\Style\_loginStyle.css" />
+    <Content Include="Contents\Style\_masterStyleLoader.css" />
+    <Content Include="Contents\Style\_masterStylesheet.css" />
+    <Content Include="Contents\Style\_profileStyle.css" />
     <Content Include="DataBase\Merged\NetworkCorrelation.sql" />
     <Content Include="DataBase\Procedure\SpAuthUser.sql" />
     <Content Include="DataBase\Procedure\SpINsertPost.sql" />
@@ -204,6 +223,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\AllCategory.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\File\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
