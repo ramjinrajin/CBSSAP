@@ -1,5 +1,5 @@
 ﻿@model List<MvcApplication1.Models.File.FileModel>
-
+ 
 <script>
     $(document).ready(function () {
         $("#mytable #checkall").click(function () {
@@ -22,19 +22,19 @@
 <script src="~/Contents/Scripts/jquery.min.js"></script>
 <script src="~/Contents/Scripts/bootstrap.min.js.js"></script>
 @*<link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />*@
-<link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+@*<link href="~/Content/Site.css" rel="stylesheet" type="text/css" />*@
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet" type="text/css" />
       @*<link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />*@
       @*<script src="~/Scripts/modernizr-2.6.2.js"></script>*@><script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/bootstrap.min.js"></script>
-<link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+@*<link href="~/Content/Site.css" rel="stylesheet" type="text/css" />*@
 
 <div class="container">
     <div class="row">
 
 
         <div class="col-md-12">
-            <h4>Modify student details</h4>
+            <h4>Add Partners to the file</h4>
 
             @if (Model.Count > 0)
             {
@@ -45,17 +45,12 @@
                         <tr>
 
                             <th><input type="checkbox" id="checkall" /></th>
-                            <th>Student ID</th>
+                            <th>File ID</th>
                             <th>Name</th>
-                            <th>Email</th>
-                            <th>College name</th>
-                            <th>Fees</th>
-                            <th>Course Type</th>
-                            <th>Mobile Number</th>
-                            <th>Total Payments</th>
-                            <th>Project</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
+                            <th>Owner Email</th>
+                            <th>File Type</th>
+                   
+                       
                         </tr>
                         <tbody>
                           @foreach (var item in Model)
@@ -66,14 +61,8 @@
                                     <td id="NameData"> @item.Name</td>
                                     <td id="EmailData"> @item.Path</td>
                                     <td id="CollegeNameData"> </td>
-                                    <td id="FeesData"> </td>
-                                    <td id="CourseTypeData"> </td>
-                                    <td id="ContactNoData"> </td>
-                                    <td id="AmountData"> </td>
-                                    <td id="ProjectData"> </td>
-                                    <td id="PaymentTypeData" style="display:none">  </td>
-                                    <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs popUpEditer" data-title="Edit" data-toggle="modal" id=" " data-target="#edit"><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-                                    <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs popUpDelete" data-title="Delete" data-toggle="modal" value=" " data-target="#delete"><span class="glyphicon glyphicon-trash"></span></button></p></td>
+                           
+                                   
                                 </tr>
                             }
 
@@ -83,10 +72,8 @@
                     </table>
                     <div class="clearfix pull-right"></div>
                     <div class="pagination pull-right">
-                        <button id="ViewTransactionsId" name="ViewTransactions" class="btn btn-primary InzenLoaderCss">View Transactions</button>
-                        <button id="AssignStudentId" data-toggle="modal" data-target="#AddApaymentsPopUpBootStap" name="AddPayments" class="btn btn-primary">Add Payment</button>
-                        @*<button id="BtnEdit" data-toggle="modal" data-target="#notready" name="Excel"  class="btn btn-primary">Export to Excel</button>*@
-                        <a href="~/Student/Excel" class="btn btn-primary">Export to Excel</a>
+                        <button id="AssignStudentId" data-toggle="modal" data-target="#AddApaymentsPopUpBootStap" name="AddPayments" class="btn btn-primary">Add Partners</button>
+                        <button id="ViewPartners" data-toggle="modal" data-target="#ViewPartnerPopUpBootStap" name="ViewPayments" class="btn btn-primary">View  Partners</button>
                     </div>
 
                     @*<ul class="pagination pull-right">
@@ -280,27 +267,27 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="container">
-                <h4>Add payments</h4>
-                <form class="form-horizontal" action="~/Student/AddPayment" method="post">
+                <h4>Add Partners</h4>
+                <form class="form-horizontal" action="~/File/AddPartners" method="post">
                     <div class="form-group">
                         <input type="hidden" id="colStudentIdPopUpBootStap" name="StudentId">
-                        <label class="control-label col-sm-2">Payment Type :</label>
+                        <label class="control-label col-sm-2">Registered Users :</label>
                         <div class="col-sm-2">
-                            <select id="EditPaymentType" name="PaymentType" class="form-control">
+                            <select id="EditPaymentType" name="PartnerId" class="form-control">
 
-                                <option value="Partial payment">Partial payment</option>
-                                <option value="Full Payment">Full Payment</option>
+                                <option value="1">Ramjin</option>
+                                <option value="2">Samjin</option>
 
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for='subject' class="control-label col-sm-2">Payment Rs :</label>
+                        <label for='subject' class="control-label col-sm-2">Remarks</label>
                         <div class="col-sm-2"> <input class="form-control " type="text" id="EditPaidAmount" name="Amount"></div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-2">
-                            <button type="submit" class="btn btn-default">Save payment</button>
+                            <button type="submit" class="btn btn-default">Add Partners</button>
                         </div>
                     </div>
 
@@ -310,50 +297,16 @@
 
     </div>
 </div>
+ 
 
-<div class="modal fade" id="AddProjectDetails" role="dialog">
+<div class="modal fade" id="ViewPartnerPopUpBootStap" role="dialog">
     <div class="modal-dialog">
 
         <!-- Modal content-->
         <div class="modal-content">
             <div class="container">
-                <h4>Add Project Details</h4>
-                <form class="form-horizontal" action="~/Student/AddProject" method="post">
+                <h4>View Partners</h4>
 
-                    <div class="form-group">
-                        <label class="control-label col-sm-2" for="Technology">Technology</label>
-                        <div class="col-sm-2">
-                            <select id="Technologyname" name="Technology" class="form-control">
-
-                                <option value="0">Not applicable</option>
-                                <option value="1">Dot net</option>
-                                <option value="2">Java</option>
-                                <option value="3">PHP</option>
-                                <option value="4">Embedded</option>
-
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label col-sm-2" for="email">Project Name</label>
-                        <div class="col-sm-2">
-                            <input type="text" class="form-control" id="colProjectName" name="ProjectName">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label col-sm-2" for="email">Project Details</label>
-                        <div class="col-sm-2">
-                            <input type="text" class="form-control" id="colProjectDetails" name="ProjectDetails">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-2">
-                            <button type="submit" class="btn btn-default">Save Project</button>
-                        </div>
-                    </div>
-                </form>
             </div>
         </div>
 

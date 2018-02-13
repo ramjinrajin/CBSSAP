@@ -1,4 +1,7 @@
 ﻿using MvcApplication1.Models.File;
+using MvcApplication1.Models.Post.Application;
+using MvcApplication1.Models.Post.Data;
+using MvcApplication1.Models.Property;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,21 +17,25 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Index()
         {
-            List<FileModel> ListFiles = new List<FileModel>()
+            List<FileModel> ListFiles = new List<FileModel>();
+       
+
+
+            List<InzPost> ListPost = new List<InzPost>();
+            PostService ObjPostSericeLayer = new PostService();
+            ListPost = ObjPostSericeLayer.GetPostDetails(USerConfig.GetUserID());
+            //return View(ListPost.OrderBy(x => x.PostId).ToList());
+
+            foreach (var Post in ListPost)
             {
-                new FileModel
+                FileModel fileModel = new FileModel
                 {
-                    FileId=1,Name="Ramjin",Path="sdaasd"
-                },
-                new FileModel
-                {
-                    FileId=1,Name="samjin",Path="sdaasd"
-                },
-                  new FileModel
-                {
-                    FileId=1,Name="Ramesh",Path="sdaasd"
-                }
-            };
+                    FileId=Post.PostId,Name=Post.FileName,Path=Post.ReferenceURL
+                };
+                ListFiles.Add(fileModel);
+            }
+
+
             return View(ListFiles);
         }
 
