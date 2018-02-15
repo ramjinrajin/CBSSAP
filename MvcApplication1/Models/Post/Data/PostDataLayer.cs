@@ -75,6 +75,7 @@ namespace InzNetworkCorrelation.Models.Post.DataLayer
                     _post.Description = rdr["Description"].ToString();
                     _post.Category = rdr["Category"].ToString();
                     _post.ReferenceURL = rdr["ReferenceURL"].ToString();
+                    _post.path = rdr["FileName"].ToString();
                     PostList.Add(_post);
                 }
 

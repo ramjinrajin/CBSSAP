@@ -113,6 +113,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\File\FileDataLayer.cs" />
     <Compile Include="Models\File\FileModel.cs" />
     <Compile Include="Models\Post\Application\PostService.cs" />
     <Compile Include="Models\Post\Data\ConnectSQL.cs" />

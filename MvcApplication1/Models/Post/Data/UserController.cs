@@ -121,7 +121,50 @@ namespace MvcApplication1.Models.Post.Data
 
         }
 
+        public static List<User> getAllUsers()
+        {
+            List<User> userlist = new List<User>();
+            using (SqlConnection con = new SqlConnection(ConnectSQL.GetConnectionString()))
+            {
+                try
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand("select * from inz_USERS Where Rowstatus='A'", con);
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            User user = new User();
+                            user.UserID = (int)rdr["UserID"];
+                            user.Username = rdr["Username"].ToString();
+                            user.Rowstatus = Convert.ToChar(rdr["Rowstatus"]);
+                            user.EmailID = rdr["EmailID"].ToString();
+                            userlist.Add(user);
 
+                        }
+                    }
+
+
+
+
+                    return userlist;
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                finally
+                {
+                    con.Close();
+                }
+            }
+
+
+
+
+        }
         public List<User> ListUsers()
         {
             List<User> _listUsers = new List<User>();
@@ -129,7 +172,7 @@ namespace MvcApplication1.Models.Post.Data
             {
 
                 SqlCommand cmd = ConnectSQL.ExecuteCommand("select EmailID,Rowstatus from inz_USERS");
- 
+
                 SqlDataReader rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {

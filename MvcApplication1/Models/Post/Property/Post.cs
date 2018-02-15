@@ -23,6 +23,7 @@ namespace MvcApplication1.Models.Property
 
             public bool NoPost { get; set; }
 
+            public string path { get; set; }
             public List<string> Categories { get; set; }
 
 

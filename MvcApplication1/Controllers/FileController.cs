@@ -24,19 +24,34 @@ namespace MvcApplication1.Controllers
             List<InzPost> ListPost = new List<InzPost>();
             PostService ObjPostSericeLayer = new PostService();
             ListPost = ObjPostSericeLayer.GetPostDetails(USerConfig.GetUserID());
-            //return View(ListPost.OrderBy(x => x.PostId).ToList());
+
 
             foreach (var Post in ListPost)
             {
                 FileModel fileModel = new FileModel
                 {
-                    FileId=Post.PostId,Name=Post.FileName,Path=Post.ReferenceURL
+                    FileId=Post.PostId,Name=Post.Title,Path=Post.path
                 };
                 ListFiles.Add(fileModel);
             }
 
 
+            ViewBag.Users = User_Controller.getAllUsers();
+
             return View(ListFiles);
+        }
+
+        [HttpPost]
+        public ActionResult AddPartners(FormCollection frmCollection)
+        {
+           int FileId = Convert.ToInt32(frmCollection["FileId"]);
+            int PartnerId = Convert.ToInt32(frmCollection["PartnerId"]);
+
+            FileDataLayer fileDatalayer = new FileDataLayer();
+
+          FileResponse FileResponse= fileDatalayer.SaveFile(PartnerId, FileId);
+          ViewBag.Response = FileResponse;
+            return RedirectToAction("Index");
         }
 
     }
