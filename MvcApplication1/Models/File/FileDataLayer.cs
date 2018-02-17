@@ -85,5 +85,32 @@ namespace MvcApplication1.Models.File
 
             return fileResponse;
         }
+
+
+        public bool UpdatePartnerStatus(int FileId,int UserId)
+        {
+            using(SqlConnection con = new SqlConnection(ConnectSQL.GetConnectionString()))
+            {
+                try
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand("PartnerStatusUpdate", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@UserId",UserId);
+                    cmd.Parameters.AddWithValue("@FileId", FileId);
+                    cmd.ExecuteNonQuery();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    
+                    throw;
+                }
+                finally
+                {
+                    con.Close();
+                }
+            }
+        }
     }
 }

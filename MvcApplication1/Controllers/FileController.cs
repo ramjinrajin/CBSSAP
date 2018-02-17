@@ -18,7 +18,7 @@ namespace MvcApplication1.Controllers
         public ActionResult Index()
         {
             List<FileModel> ListFiles = new List<FileModel>();
-       
+
 
 
             List<InzPost> ListPost = new List<InzPost>();
@@ -30,7 +30,9 @@ namespace MvcApplication1.Controllers
             {
                 FileModel fileModel = new FileModel
                 {
-                    FileId=Post.PostId,Name=Post.Title,Path=Post.path
+                    FileId = Post.PostId,
+                    Name = Post.Title,
+                    Path = Post.path
                 };
                 ListFiles.Add(fileModel);
             }
@@ -44,20 +46,49 @@ namespace MvcApplication1.Controllers
         [HttpPost]
         public ActionResult AddPartners(FormCollection frmCollection)
         {
-           int FileId = Convert.ToInt32(frmCollection["FileId"]);
+            int FileId = Convert.ToInt32(frmCollection["FileId"]);
             int PartnerId = Convert.ToInt32(frmCollection["PartnerId"]);
 
             FileDataLayer fileDatalayer = new FileDataLayer();
 
-          FileResponse FileResponse= fileDatalayer.SaveFile(PartnerId, FileId);
-          if (FileResponse.Status == FileStatus.Sucess)
-          {
-              TempData["AlertMessage"] = "Sucess";
-          }
-          else
-          {
-              TempData["AlertMessage"] = "Error";
-          }
+            FileResponse FileResponse = fileDatalayer.SaveFile(PartnerId, FileId);
+            if (FileResponse.Status == FileStatus.Sucess)
+            {
+                TempData["AlertMessage"] = "Sucess";
+            }
+            else
+            {
+                TempData["AlertMessage"] = "Error";
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public ActionResult ViewPartner(int FileId)
+        {
+            
+            User_Controller _USerDatalayer = new User_Controller();
+            ViewBag.FileId = FileId;
+            List<User> ListUser = _USerDatalayer.GetPartnersbyFileId(FileId);
+            return View(ListUser);
+        }
+
+        [HttpPost]
+        public ActionResult ViewPartner(FormCollection PostData)
+        {
+            FileDataLayer fileDLayer = new FileDataLayer();
+            int FileId = int.Parse(PostData["FileId"]);
+            int UserId = int.Parse(PostData["UserId"]);
+            bool Response = fileDLayer.UpdatePartnerStatus(FileId, UserId);
+            if (Response)
+            {
+                TempData["AlertMessage"] = "Sucess";
+            }
+            else
+            {
+                TempData["AlertMessage"] = "Error";
+            }
+
             return RedirectToAction("Index");
         }
 

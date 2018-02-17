@@ -228,6 +228,12 @@
   <ItemGroup>
     <Content Include="Views\File\Index.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Master\layoutBootstap.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\File\ViewPartner.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

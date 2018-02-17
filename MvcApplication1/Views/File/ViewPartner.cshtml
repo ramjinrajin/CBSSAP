@@ -1,0 +1,122 @@
+﻿@model  List<MvcApplication1.Models.Post.Data.User>
+@{
+    ViewBag.Title = "ViewPartner";
+    Layout = "~/Views/Master/layoutBootstap.cshtml";
+}
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+
+        $("#EnableButton").attr("disabled", "disabled");
+
+        var ckbox = $('.Checkbox');
+
+        $('input').on('click', function () {
+            if (ckbox.is(':checked')) {
+                countChecked();
+            }     
+        });
+
+     
+
+        var countChecked = function () {
+            var n = $("input:checked").length;
+        
+            if (n == 1) {
+                $("#EnableButton").attr("disabled", false);
+
+
+            } else {
+                $("#EnableButton").attr("disabled", "disabled");
+
+            }
+        };
+        
+    });
+
+
+
+
+
+</script>
+
+<h2>ViewPartner</h2>
+<form method="post">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th style="width:2%">
+
+                </th>
+                <th>Partners</th>
+                <th>Email</th>
+
+            </tr>
+        </thead>
+        <tbody>
+
+
+
+
+
+            @foreach (var MainObjects in Model)
+            {
+                if (MainObjects.EmailID != "")
+                {
+                    if (!MainObjects.EmailID.Contains("admin"))
+                    {
+                        if (MainObjects.Rowstatus == 'D')
+                        {
+                            <tr class="danger">
+                                <td>
+
+
+                                    <input type="checkbox" name="UserId" class="Checkbox" value="@MainObjects.UserID">
+
+                                </td>
+                                <td>@MainObjects.Username</td>
+                                <td>@MainObjects.EmailID</td>
+
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr class="success">
+                                <td>
+
+
+                                    <input type="checkbox" name="UserId" class="Checkbox" value="@MainObjects.UserID">
+
+                                </td>
+                                <td>@MainObjects.Username</td>
+                                <td>@MainObjects.EmailID</td>
+
+
+                            </tr>
+                        }
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td></td>
+                        <td>
+                            No Users added yet !!!
+                        </td>
+                    </tr>
+                }
+
+
+            }
+
+
+
+        </tbody>
+    </table>
+    <input type="hidden" name="FileId" value="@ViewBag.FileId" />
+    <button type="submit" id="EnableButton" class="btn btn-primary">Enable/Disable</button>
+    <a href="/File/Index" class="btn btn-primary" onclick="close_window();return false;">Back</a>
+</form>

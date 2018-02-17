@@ -117,7 +117,7 @@
 
                             <tr>
 
-                                <th><input type="checkbox" id="checkall" /></th>
+                                <th> </th>
                                 <th>File ID</th>
                                 <th>Name</th>
                                 <th>Owner Email</th>
@@ -146,7 +146,7 @@
                         <div class="clearfix pull-right"></div>
                         <div class="pagination pull-right">
                             <button id="AssignStudentId" data-toggle="modal" data-target="#AddApaymentsPopUpBootStap" name="AddPayments" class="btn btn-primary">Add Partners</button>
-                            <button id="ViewPartners" data-toggle="modal" data-target="#ViewPartnerPopUpBootStap" name="ViewPayments" class="btn btn-primary">View  Partners</button>
+                            <a id="ViewPartners"   name="ViewPayments" class="btn btn-primary">View  Partners</a>
                         </div>
 
 
@@ -421,12 +421,12 @@
             var n = $("input:checked").length;
             if (n == 1) {
                 $("#AssignStudentId").attr("disabled", false);
-                $("#ViewTransactionsId").attr("disabled", false);
+                $("#ViewPartners").attr("disabled", false);
                 var me = $(this);
                 CommonStudentId = me.val();
             } else {
                 $("#AssignStudentId").attr("disabled", "disabled");
-                $("#ViewTransactionsId").attr("disabled", "disabled");
+                $("#ViewPartners").attr("disabled", "disabled");
             }
         };
         countChecked();
@@ -460,8 +460,8 @@
             $('[id$=colFileIdPopUpBootStap]').val(CommonStudentId);
         });
 
-        $("#ViewTransactionsId").click(function () {
-            $(location).attr('href', '/Student/Transactions?StudentId=' + CommonStudentId);
+        $("#ViewPartners").click(function () {
+            $(location).attr('href', '/File/ViewPartner?FileId=' + CommonStudentId);
 
         });
 

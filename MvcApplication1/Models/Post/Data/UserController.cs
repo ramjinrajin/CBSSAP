@@ -193,6 +193,8 @@ namespace MvcApplication1.Models.Post.Data
         }
 
 
+
+
         public static int GetUserID(string USername)
         {
             int Userid = 0;
@@ -235,6 +237,49 @@ namespace MvcApplication1.Models.Post.Data
             }
         }
 
+
+        public List<User> GetPartnersbyFileId(int FileId)
+        {
+
+            using (SqlConnection con = new SqlConnection(ConnectSQL.GetConnectionString()))
+            {
+                try
+                {
+                    con.Open();
+                    List<User> ListUser = new List<User>();
+                    SqlCommand cmd = new SqlCommand("GetPartners",con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@FileId", FileId);
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        User userObj = new User()
+                        {
+                            Username = rdr["Username"].ToString(),
+                            EmailID = rdr["EmailID"].ToString(),
+                            Rowstatus =int.Parse(rdr["Isdeleted"].ToString())==0?'A':'D',
+                            UserID=int.Parse(rdr["UserId"].ToString())
+                        };
+                      
+                        ListUser.Add(userObj);
+
+                    }
+
+                    return ListUser;
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                finally
+                {
+                    con.Close();
+                }
+            }
+
+
+        }
 
         internal static int GetUserIDByEmailId(string EmailID)
         {
