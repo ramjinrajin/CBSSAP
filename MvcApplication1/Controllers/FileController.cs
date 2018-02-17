@@ -50,7 +50,14 @@ namespace MvcApplication1.Controllers
             FileDataLayer fileDatalayer = new FileDataLayer();
 
           FileResponse FileResponse= fileDatalayer.SaveFile(PartnerId, FileId);
-          ViewBag.Response = FileResponse;
+          if (FileResponse.Status == FileStatus.Sucess)
+          {
+              TempData["AlertMessage"] = "Sucess";
+          }
+          else
+          {
+              TempData["AlertMessage"] = "Error";
+          }
             return RedirectToAction("Index");
         }
 
