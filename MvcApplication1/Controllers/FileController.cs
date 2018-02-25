@@ -4,6 +4,7 @@ using MvcApplication1.Models.Post.Data;
 using MvcApplication1.Models.Property;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -66,7 +67,7 @@ namespace MvcApplication1.Controllers
         [HttpGet]
         public ActionResult ViewPartner(int FileId)
         {
-            
+
             User_Controller _USerDatalayer = new User_Controller();
             ViewBag.FileId = FileId;
             List<User> ListUser = _USerDatalayer.GetPartnersbyFileId(FileId);
@@ -90,6 +91,58 @@ namespace MvcApplication1.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public ActionResult Download(int FileId)
+        {
+            try
+            {
+                //Get Acesss
+                FileDataLayer objFileDataLayer = new FileDataLayer();
+                if (objFileDataLayer.FileUserAccess(FileId, USerConfig.GetUserID()))
+                {
+                    string fileName = objFileDataLayer.GetFileName(FileId);
+                    if (fileName!="NIL")
+                    {
+                        
+                        var filepath = Path.Combine(Server.MapPath("~/PostImage"), fileName);
+                        byte[] filedata = System.IO.File.ReadAllBytes(filepath);
+                        string contentType = MimeMapping.GetMimeMapping(filepath);
+
+                        var cd = new System.Net.Mime.ContentDisposition
+                        {
+                            FileName = fileName,
+                            Inline = true,
+                        };
+
+                        Response.AppendHeader("Content-Disposition", cd.ToString());
+
+                        return File(filedata, contentType);
+                    }
+                    else
+                    {
+                        ViewBag.Title = "File not found";
+                        ViewBag.Message = "The file you are trying to access is deleted";
+                        return View();
+                    }
+           
+                }
+                else
+                {
+                    ViewBag.Title = "Illegal Entry";
+                    ViewBag.Message = "You are not authorized to access this file";
+                    return View();
+                }
+
+
+
+
+            }
+            catch
+            {
+                return View();
+            }
         }
 
     }
