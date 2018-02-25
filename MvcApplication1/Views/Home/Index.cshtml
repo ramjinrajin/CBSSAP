@@ -35,31 +35,51 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
 
-                    <li>
+                    <li >
                         <a href="~/home/index">Home</a>
                     </li>
-                    <li>
-                        <a href="~/Post/index">File</a>
+
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">File<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="~/Post/index">Upload File</a>
+                            </li>
+                            <li>
+                                <a href="~/File/index">File Permissions</a>
+                            </li>
+                          
+                           
+                            <li>
+                                <a href="~/Post/managepost">Manage File</a>
+                            </li>
+                            
+                        </ul>
                     </li>
-                    <li>
-                        <a href="~/Post/managepost">Manage File</a>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Category<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="~/Home/Category">Add Category</a>
+                            </li>
+                            <li>
+                                <a href="~/Home/AllCategory">Delete Category</a>
+                            </li>
+
+                        </ul>
                     </li>
-                    <li>
-                        <a href="~/Home/Category">Add Category</a>
-                    </li>
-                    <li>
-                        <a href="~/Home/AllCategory">Delete Category</a>
-                    </li>
-                    <li>
-                        <a href="~/Post/managepost">Manage File</a>
-                    </li>
+
+
+
+                  
 
                     @if (HttpContext.Current.User.Identity.Name != "" && ViewBag.Title != "login")
                     {
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Hi @HttpContext.Current.User.Identity.Name!<b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                 
+                              
                                 @if (HttpContext.Current.User.Identity.Name == "admin")
                                 {
 
@@ -93,7 +113,7 @@
     <section id="banner">
         <div class="inner split">
             <section>
-                <h2>Share the file with multiple user OTP security using<a href="#"> FILE STREAM</a></h2>
+                <h2>Share the file with multiple user with  OTP security using <a href="https://www.asp.net/mvc"> MVC</a></h2>
             </section>
             <section>
                 <p>Unlimited file upload </p>
@@ -112,10 +132,10 @@
                 <div class="inner split">
                     <section>
                         <div class="image">
-                            <img src="~/PostImage/@Item.FileName" style="width :300px;height:250px;" alt="" />
+                            <img src="~/PostImage/@Item.FileName" style="height:250px;" alt="" />
                         </div>
                         <h2>@Item.Title</h2>
-                        <p>@Item.Description</p>
+                        <p style="overflow: scroll;">@Item.Description</p>
                         <ul class="actions">
                             <li><a target="_blank" href="@Item.ReferenceURL" class="button alt">Learn more</a></li>
                         </ul>
@@ -156,7 +176,7 @@
 
                     <div class="spotlight">
                         <div class="image">
-                            <img style="width :300px;height:250px;" src="~/PostImage/@Post.FileName" alt="" />
+                            <img style="height:250px;" src="~/PostImage/@Post.FileName" alt="" />
                         </div>
                         <div class="content">
                             <h3>@Post.Title </h3>

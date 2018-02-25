@@ -127,6 +127,10 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="App_Data\HeeraUber.mdf" />
+    <Content Include="App_Data\HeeraUber_log.ldf" />
+    <Content Include="App_Data\InzNetwork.mdf" />
+    <Content Include="App_Data\InzNetwork_log.ldf" />
     <Content Include="App_Data\OTPFileShare.sql" />
     <Content Include="assets\css\font-awesome.min.css" />
     <Content Include="assets\css\ie9.css" />
@@ -174,6 +178,7 @@
     <Content Include="images\pic01.jpg" />
     <Content Include="images\pic02.jpg" />
     <Content Include="images\pic03.jpg" />
+    <Content Include="PostImage\ErrorIcon.png" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -185,9 +190,7 @@
     </Content>
     <Content Include="Views\Web.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="PostImage\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

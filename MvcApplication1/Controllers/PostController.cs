@@ -64,14 +64,16 @@ namespace MvcApplication1.Controllers
             }
 
             TempData["AlertMessage"] = getResponse;
+            ViewBag.Categories = ObjPostSericeLayer.GetCategories();
             if (GetReturnCode != -1 || GetReturnCode != -2)
             {
                 InzPost SavedPost = new InzPost();
                 SavedPost.PostId = GetReturnCode;
-                return View("SuggestAction", SavedPost);
+                return View();
             }
             else
             {
+
                 return View();
             }
 

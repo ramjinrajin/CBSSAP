@@ -23,7 +23,7 @@ namespace InzNetworkCorrelation.Models.Post.DataLayer
                 {
                     SqlCommand cmd = new SqlCommand("spInsertPostDetails", con);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@UserId",Convert.ToInt32(ObjPost.UserId));
+                    cmd.Parameters.AddWithValue("@UserId", Convert.ToInt32(ObjPost.UserId));
                     cmd.Parameters.AddWithValue("@Title", ObjPost.Title.ToString());
                     cmd.Parameters.AddWithValue("@SubDescription", ObjPost.SubDescription.ToString());
                     cmd.Parameters.AddWithValue("@Category", ObjPost.Category.ToString());
@@ -101,7 +101,7 @@ namespace InzNetworkCorrelation.Models.Post.DataLayer
                 }
                 else
                 {
-                    cmd = new SqlCommand("select * from inz_Post where   PostID in (select PostID from PostShared where USERID=@UserID)", con);
+                    cmd = new SqlCommand("select * from inz_Post where   PostID in (select PostID from PostShared where USERID=@UserID) order by 1 desc", con);
                     cmd.Parameters.AddWithValue("@UserID", UserId);
                 }
 
@@ -123,7 +123,7 @@ namespace InzNetworkCorrelation.Models.Post.DataLayer
                         _post.IsApproved = Convert.ToInt32(rdr["IsApproved"]);
                         _post.ReferenceURL = rdr["ReferenceURL"].ToString();
                         _post.ListPost = ListOthersPost(UserId);
-                        _post.FileName = rdr["FileName"].ToString();
+                        _post.FileName = SetFile(rdr["FileName"].ToString());
                         PostList.Add(_post);
                     }
                 }
@@ -141,7 +141,17 @@ namespace InzNetworkCorrelation.Models.Post.DataLayer
             return PostList;
 
         }
-
+        private string SetFile(string filename)
+        {
+            if (filename == "" || !filename.Contains(".jpg") || !filename.Contains(".jpeg") || !filename.Contains(".png"))
+            {
+                return "ErrorIcon.png";
+            }
+            else
+            {
+                return filename;
+            }
+        }
         public List<InzPost> ListOthersPost(int UserId)
         {
             List<InzPost> PostList = new List<InzPost>();
@@ -194,7 +204,7 @@ namespace InzNetworkCorrelation.Models.Post.DataLayer
                     cmd.Parameters.AddWithValue("@Description", ObjPost.Description);
                     cmd.Parameters.AddWithValue("@ReferenceURL", ObjPost.ReferenceURL);
                     cmd.Parameters.AddWithValue("@ReferenceURL", ObjPost.ReferenceURL);
-                    cmd.Parameters.AddWithValue("@FileName", string.IsNullOrWhiteSpace(ObjPost.FileName)?"":ObjPost.FileName.ToString());
+                    cmd.Parameters.AddWithValue("@FileName", string.IsNullOrWhiteSpace(ObjPost.FileName) ? "" : ObjPost.FileName.ToString());
 
                     con.Open();
                     return (int)cmd.ExecuteScalar();
@@ -327,10 +337,10 @@ namespace InzNetworkCorrelation.Models.Post.DataLayer
                     SqlCommand cmd = new SqlCommand("INSERT INTO INZ_CATEGORY (CATEGORY) VALUES (@Category)", con);
                     cmd.CommandType = CommandType.Text;
                     cmd.Parameters.AddWithValue("@Category", Category);
-                
+
                     con.Open();
                     cmd.ExecuteNonQuery();
-                        return true;
+                    return true;
 
                 }
 
@@ -351,9 +361,9 @@ namespace InzNetworkCorrelation.Models.Post.DataLayer
                 con.Open();
 
 
-                
-                    cmd = new SqlCommand("select CATEGORY from INZ_CATEGORY", con);
-              
+
+                cmd = new SqlCommand("select CATEGORY from INZ_CATEGORY", con);
+
 
 
 
@@ -366,10 +376,10 @@ namespace InzNetworkCorrelation.Models.Post.DataLayer
                     {
 
                         Categories.Add(rdr[0].ToString());
-                       
+
                     }
                 }
-               
+
 
             }
 

@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data;
+using System.Data.SqlClient;
 
 
 namespace MvcApplication1.Controllers
@@ -13,10 +15,18 @@ namespace MvcApplication1.Controllers
     public class HomeController : Controller
     {
 
+         
+
+
         // GET: Home
         [Authorize]
         public ActionResult Index()
         {
+
+            
+
+
+
             PostService ObjPostService = new PostService();
             List<InzPost> ListPost = new List<InzPost>();
 
@@ -34,7 +44,7 @@ namespace MvcApplication1.Controllers
 
            
       
-            return View(ListPost.OrderBy(x => x.PostId).ToList());
+            return View(ListPost.OrderByDescending(x => x.PostId).ToList());
 
         }
 
