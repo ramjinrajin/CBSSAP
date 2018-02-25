@@ -185,6 +185,42 @@ namespace MvcApplication1.Models.File
 
             return Filename;
         }
+
+        internal int GenerateRequest(int FileId)
+        {
+            int RequestId = 0;
+            using (SqlConnection con = new SqlConnection(ConnectSQL.GetConnectionString()))
+            {
+                try
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand("SpFileRequest", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@FileId", FileId);
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if(rdr.HasRows)
+                    {
+                        while(rdr.Read())
+                        {
+                            RequestId= Convert.ToInt32(rdr["RESPONSE"]);
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                finally
+                {
+                    con.Close();
+                }
+
+
+            }
+
+            return RequestId;
+        }
     }
 
 

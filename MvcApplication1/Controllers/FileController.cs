@@ -98,8 +98,10 @@ namespace MvcApplication1.Controllers
         {
             try
             {
+
                 //Get Acesss
                 FileDataLayer objFileDataLayer = new FileDataLayer();
+                objFileDataLayer.GenerateRequest(FileId);
                 if (objFileDataLayer.FileUserAccess(FileId, USerConfig.GetUserID()))
                 {
                     string fileName = objFileDataLayer.GetFileName(FileId);
