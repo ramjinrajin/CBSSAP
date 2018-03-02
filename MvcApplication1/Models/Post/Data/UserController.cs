@@ -71,10 +71,11 @@ namespace MvcApplication1.Models.Post.Data
         public static List<User> UserAllUser(int FileId)
         {
             List<User> userlist = new List<User>();
+            SqlConnection con = new SqlConnection(ConnectSQL.GetConnectionString());
             try
             {
-
-                SqlCommand cmd = ConnectSQL.ExecuteProcedure("SpFileAccess");
+                con.Open();
+                SqlCommand cmd = new SqlCommand("SpFileAccess", con);
                 cmd.Parameters.AddWithValue("@FileId", FileId);
                 SqlDataReader rdr = cmd.ExecuteReader();
                 if (rdr.HasRows)
@@ -93,7 +94,7 @@ namespace MvcApplication1.Models.Post.Data
                 {
                     rdr.Dispose();
                     cmd.Dispose();
-                    cmd = ConnectSQL.ExecuteCommand("select UserID,Username,Rowstatus from inz_USERS");
+                    cmd = new SqlCommand("select UserID,Username,Rowstatus from inz_USERS", con);
                     rdr = cmd.ExecuteReader();
                     if (rdr.HasRows)
                     {
@@ -116,6 +117,10 @@ namespace MvcApplication1.Models.Post.Data
             catch
             {
                 return userlist;
+            }
+            finally
+            {
+                con.Close();
             }
 
 
@@ -168,10 +173,12 @@ namespace MvcApplication1.Models.Post.Data
         public List<User> ListUsers()
         {
             List<User> _listUsers = new List<User>();
+            SqlConnection con = new SqlConnection(ConnectSQL.GetConnectionString());
             try
             {
+                con.Open();
 
-                SqlCommand cmd = ConnectSQL.ExecuteCommand("select EmailID,Rowstatus from inz_USERS");
+                SqlCommand cmd = new SqlCommand("select EmailID,Rowstatus from inz_USERS", con);
 
                 SqlDataReader rdr = cmd.ExecuteReader();
                 while (rdr.Read())
@@ -190,6 +197,10 @@ namespace MvcApplication1.Models.Post.Data
             {
                 return _listUsers;
             }
+            finally
+            {
+                con.Close();
+            }
         }
 
 
@@ -197,43 +208,62 @@ namespace MvcApplication1.Models.Post.Data
 
         public static int GetUserID(string USername)
         {
+
+
             int Userid = 0;
-            try
+            using (SqlConnection con = new SqlConnection(ConnectSQL.GetConnectionString()))
             {
-
-                SqlCommand cmd = ConnectSQL.ExecuteCommand("select UserId from inz_USERS Where Username=@Username");
-                cmd.Parameters.AddWithValue("@Username", USername);
-                SqlDataReader rdr = cmd.ExecuteReader();
-                while (rdr.Read())
+                try
                 {
-                    Userid = (int)rdr["UserId"];
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand("select UserId from inz_USERS Where Username=@Username", con);
+                    cmd.Parameters.AddWithValue("@Username", USername);
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        Userid = (int)rdr["UserId"];
 
+                    }
+
+
+                    return Userid;
                 }
-
-
-                return Userid;
+                catch (Exception)
+                {
+                    
+                    throw;
+                }
+                finally
+                {
+                    con.Close();
+                }
             }
-            catch
-            {
-                return Userid;
-            }
+           
         }
 
         public bool UserDisableEnable(string Email)
         {
-            try
+            using (SqlConnection con = new SqlConnection(ConnectSQL.GetConnectionString()))
             {
+                try
+                {
+                    con.Open();
 
-                SqlCommand cmd = ConnectSQL.ExecuteCommand("SpUserEnableDisable");
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Email", Email);
-                cmd.ExecuteNonQuery();
+                    SqlCommand cmd = new SqlCommand("SpUserEnableDisable", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Email", Email);
+                    cmd.ExecuteNonQuery();
 
-                return true;
-            }
-            catch
-            {
-                return false;
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+                finally
+                {
+                    con.Close();
+                }
             }
         }
 
@@ -284,25 +314,34 @@ namespace MvcApplication1.Models.Post.Data
         internal static int GetUserIDByEmailId(string EmailID)
         {
             int Userid = 0;
-            try
-            {
 
-                SqlCommand cmd = ConnectSQL.ExecuteCommand("select UserId from inz_USERS Where EmailID=@EmailID");
-                cmd.Parameters.AddWithValue("@EmailID", EmailID);
-                SqlDataReader rdr = cmd.ExecuteReader();
-                while (rdr.Read())
+            using (SqlConnection con = new SqlConnection(ConnectSQL.GetConnectionString()))
+            {
+                try
                 {
-                    Userid = (int)rdr["UserId"];
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand("select UserId from inz_USERS Where EmailID=@EmailID", con);
+                    cmd.Parameters.AddWithValue("@EmailID", EmailID);
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        Userid = (int)rdr["UserId"];
 
+                    }
+
+
+                    return Userid;
                 }
-
-
-                return Userid;
+                catch
+                {
+                    return Userid;
+                }
+                finally
+                {
+                    con.Close();
+                }
             }
-            catch
-            {
-                return Userid;
-            }
+          
         }
     }
 }

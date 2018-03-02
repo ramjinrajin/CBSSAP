@@ -14,4 +14,9 @@ namespace MvcApplication1.Models.File
         public string Path { get; set; }
 
     }
+
+    public class PropertiesViewModel
+    {
+        public int RequestId { get; set; }
+    }
 }

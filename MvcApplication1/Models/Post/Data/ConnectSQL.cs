@@ -9,14 +9,14 @@ namespace inzCloud.Models.Data_Layer
 {
     public class ConnectSQL
     {
-        public static SqlConnection SqlConnect()
-        {
+        //public static SqlConnection SqlConnect()
+        //{
 
-            string connectionString = GetConnectionString();
-            SqlConnection con = new SqlConnection(connectionString);
-            con.Open();
-            return con;
-        }
+        //    string connectionString = GetConnectionString();
+        //    SqlConnection con = new SqlConnection(connectionString);
+        //    con.Open();
+        //    return con;
+        //}
 
         public static string GetConnectionString()
         {
@@ -24,20 +24,20 @@ namespace inzCloud.Models.Data_Layer
              
         }
 
-        public static SqlCommand ExecuteCommand(string Query)
-        {
+        //public static SqlCommand ExecuteCommand(string Query)
+        //{
 
-            SqlCommand cmd = new SqlCommand(Query, ConnectSQL.SqlConnect());
-            cmd.CommandType = CommandType.Text;
-            return cmd;
-        }
+        //    SqlCommand cmd = new SqlCommand(Query, ConnectSQL.SqlConnect());
+        //    cmd.CommandType = CommandType.Text;
+        //    return cmd;
+        //}
 
-        public static SqlCommand ExecuteProcedure(string Query)
-        {
+        //public static SqlCommand ExecuteProcedure(string Query)
+        //{
 
-            SqlCommand cmd = new SqlCommand(Query, ConnectSQL.SqlConnect());
-            cmd.CommandType = CommandType.StoredProcedure;
-            return cmd;
-        }
+        //    SqlCommand cmd = new SqlCommand(Query, ConnectSQL.SqlConnect());
+        //    cmd.CommandType = CommandType.StoredProcedure;
+        //    return cmd;
+        //}
     }
 }

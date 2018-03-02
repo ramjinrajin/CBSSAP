@@ -1,4 +1,5 @@
 ﻿using MvcApplication1.Models.File;
+using MvcApplication1.Models.OTP_Generate;
 using MvcApplication1.Models.Post.Application;
 using MvcApplication1.Models.Post.Data;
 using MvcApplication1.Models.Property;
@@ -13,8 +14,7 @@ namespace MvcApplication1.Controllers
 {
     public class FileController : Controller
     {
-        //Ramjin modified
-        // GET: /File/
+        FileDataLayer objFileDataLayer = new FileDataLayer();
 
         public ActionResult Index()
         {
@@ -96,38 +96,50 @@ namespace MvcApplication1.Controllers
         [HttpGet]
         public ActionResult Download(int FileId)
         {
+            
             try
             {
-
-                //Get Acesss
-                FileDataLayer objFileDataLayer = new FileDataLayer();
-                objFileDataLayer.GenerateRequest(FileId);
-                if (objFileDataLayer.FileUserAccess(FileId, USerConfig.GetUserID()))
+                int CurrentUserId=USerConfig.GetUserID();
+                if (objFileDataLayer.FileUserAccess(FileId,CurrentUserId))
                 {
-                    string fileName = objFileDataLayer.GetFileName(FileId);
-                    if (fileName!="NIL")
+
+                    int RequestId = objFileDataLayer.GenerateRequest(FileId, CurrentUserId);
+                    List<int> PartnerIds = objFileDataLayer.GetPartnerIds(FileId);
+                    objFileDataLayer.GenerateOTP(PartnerIds, RequestId);
+                    string AccessStatus = objFileDataLayer.AuthorizeOTP(RequestId);
+                    //Sent Mails
+                    if (AccessStatus == "NoUserPending" && AccessStatus!="")
                     {
-                        
-                        var filepath = Path.Combine(Server.MapPath("~/PostImage"), fileName);
-                        byte[] filedata = System.IO.File.ReadAllBytes(filepath);
-                        string contentType = MimeMapping.GetMimeMapping(filepath);
-
-                        var cd = new System.Net.Mime.ContentDisposition
+                        string fileName = objFileDataLayer.GetFileName(FileId);
+                        if (fileName != "NIL")
                         {
-                            FileName = fileName,
-                            Inline = true,
-                        };
 
-                        Response.AppendHeader("Content-Disposition", cd.ToString());
+                            var filepath = Path.Combine(Server.MapPath("~/PostImage"), fileName);
+                            byte[] filedata = System.IO.File.ReadAllBytes(filepath);
+                            string contentType = MimeMapping.GetMimeMapping(filepath);
 
-                        return File(filedata, contentType);
+                            var cd = new System.Net.Mime.ContentDisposition
+                            {
+                                FileName = fileName,
+                                Inline = true,
+                            };
+
+                            Response.AppendHeader("Content-Disposition", cd.ToString());
+                            objFileDataLayer.DeleteRequest(RequestId);
+                            return File(filedata, contentType);
+                        }
+                        else
+                        {
+                            ViewBag.Title = "File not found";
+                            ViewBag.Message = "The file you are trying to access is deleted";
+                            return View();
+                        }
                     }
                     else
                     {
-                        ViewBag.Title = "File not found";
-                        ViewBag.Message = "The file you are trying to access is deleted";
                         return View();
                     }
+                    
            
                 }
                 else
