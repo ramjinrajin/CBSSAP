@@ -311,6 +311,77 @@ namespace MvcApplication1.Models.Post.Data
 
         }
 
+
+        internal  string GetEmailbyPartnerId(string PartnerId)
+        {
+            string EmailId = "";
+
+            using (SqlConnection con = new SqlConnection(ConnectSQL.GetConnectionString()))
+            {
+                try
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand("select EmailID from inz_USERS Where PartnerId=@PartnerId", con);
+                    cmd.Parameters.AddWithValue("@PartnerId", PartnerId);
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        EmailId = (string)rdr["EmailID"];
+
+                    }
+
+
+                    return EmailId;
+                }
+                catch
+                {
+                    throw;
+                }
+                finally
+                {
+                    con.Close();
+                }
+            }
+
+        }
+
+        //select  OTP from RequestTransaction where RequestId=@RequestId AND PartnerId=@PartnerId
+        public int GetOtp(int RequestId,int PartnerId)
+        {
+            int Otp = 0;
+            using(SqlConnection con = new SqlConnection(ConnectSQL.GetConnectionString()))
+            {
+                try
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand("select  OTP from RequestTransaction where RequestId=@RequestId AND PartnerId=@PartnerId", con);
+                    cmd.Parameters.AddWithValue("@RequestId", RequestId);
+                    cmd.Parameters.AddWithValue("@PartnerId", PartnerId);
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if(rdr.HasRows)
+                    {
+                        while(rdr.Read())
+                        {
+                            Otp=(int)rdr["Otp"];
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    
+                    throw;
+                }
+                finally
+                {
+                    con.Close();
+                }
+            }
+
+
+            return Otp;
+        }
+
+
         internal static int GetUserIDByEmailId(string EmailID)
         {
             int Userid = 0;

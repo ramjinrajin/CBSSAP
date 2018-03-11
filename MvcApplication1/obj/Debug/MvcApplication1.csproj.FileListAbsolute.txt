@@ -237,3 +237,24 @@ F:\Projects\Inzenjer\MoutZion\CBSSAP\CBSSAP\MvcApplication1\bin\System.Web.WebPa
 F:\Projects\Inzenjer\MoutZion\CBSSAP\CBSSAP\MvcApplication1\obj\Debug\MvcApplication1.csprojResolveAssemblyReference.cache
 F:\Projects\Inzenjer\MoutZion\CBSSAP\CBSSAP\MvcApplication1\obj\Debug\MvcApplication1.dll
 F:\Projects\Inzenjer\MoutZion\CBSSAP\CBSSAP\MvcApplication1\obj\Debug\MvcApplication1.pdb
+C:\Users\LENOVO-PC\Desktop\New folder (2)\OTP-Based-File-Sharing\MvcApplication1\bin\MvcApplication1.dll.config
+C:\Users\LENOVO-PC\Desktop\New folder (2)\OTP-Based-File-Sharing\MvcApplication1\bin\MvcApplication1.dll
+C:\Users\LENOVO-PC\Desktop\New folder (2)\OTP-Based-File-Sharing\MvcApplication1\bin\MvcApplication1.pdb
+C:\Users\LENOVO-PC\Desktop\New folder (2)\OTP-Based-File-Sharing\MvcApplication1\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\LENOVO-PC\Desktop\New folder (2)\OTP-Based-File-Sharing\MvcApplication1\bin\Newtonsoft.Json.dll
+C:\Users\LENOVO-PC\Desktop\New folder (2)\OTP-Based-File-Sharing\MvcApplication1\bin\System.Web.Helpers.dll
+C:\Users\LENOVO-PC\Desktop\New folder (2)\OTP-Based-File-Sharing\MvcApplication1\bin\System.Web.Mvc.dll
+C:\Users\LENOVO-PC\Desktop\New folder (2)\OTP-Based-File-Sharing\MvcApplication1\bin\System.Web.Razor.dll
+C:\Users\LENOVO-PC\Desktop\New folder (2)\OTP-Based-File-Sharing\MvcApplication1\bin\System.Web.WebPages.Deployment.dll
+C:\Users\LENOVO-PC\Desktop\New folder (2)\OTP-Based-File-Sharing\MvcApplication1\bin\System.Web.WebPages.dll
+C:\Users\LENOVO-PC\Desktop\New folder (2)\OTP-Based-File-Sharing\MvcApplication1\bin\System.Web.WebPages.Razor.dll
+C:\Users\LENOVO-PC\Desktop\New folder (2)\OTP-Based-File-Sharing\MvcApplication1\bin\Newtonsoft.Json.xml
+C:\Users\LENOVO-PC\Desktop\New folder (2)\OTP-Based-File-Sharing\MvcApplication1\bin\System.Web.Helpers.xml
+C:\Users\LENOVO-PC\Desktop\New folder (2)\OTP-Based-File-Sharing\MvcApplication1\bin\System.Web.Mvc.xml
+C:\Users\LENOVO-PC\Desktop\New folder (2)\OTP-Based-File-Sharing\MvcApplication1\bin\System.Web.Razor.xml
+C:\Users\LENOVO-PC\Desktop\New folder (2)\OTP-Based-File-Sharing\MvcApplication1\bin\System.Web.WebPages.xml
+C:\Users\LENOVO-PC\Desktop\New folder (2)\OTP-Based-File-Sharing\MvcApplication1\bin\System.Web.WebPages.Deployment.xml
+C:\Users\LENOVO-PC\Desktop\New folder (2)\OTP-Based-File-Sharing\MvcApplication1\bin\System.Web.WebPages.Razor.xml
+C:\Users\LENOVO-PC\Desktop\New folder (2)\OTP-Based-File-Sharing\MvcApplication1\obj\Debug\MvcApplication1.csprojResolveAssemblyReference.cache
+C:\Users\LENOVO-PC\Desktop\New folder (2)\OTP-Based-File-Sharing\MvcApplication1\obj\Debug\MvcApplication1.dll
+C:\Users\LENOVO-PC\Desktop\New folder (2)\OTP-Based-File-Sharing\MvcApplication1\obj\Debug\MvcApplication1.pdb

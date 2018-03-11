@@ -2,6 +2,7 @@
     Layout = null;
 }
 
+
 <!DOCTYPE html>
 
 <html>
@@ -35,7 +36,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
 
-                    <li >
+                    <li>
                         <a href="~/home/index">Home</a>
                     </li>
 
@@ -49,12 +50,12 @@
                             <li>
                                 <a href="~/File/index">File Permissions</a>
                             </li>
-                          
-                           
+
+
                             <li>
                                 <a href="~/Post/managepost">Manage File</a>
                             </li>
-                            
+
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -72,14 +73,14 @@
 
 
 
-                  
+
 
                     @if (HttpContext.Current.User.Identity.Name != "" && ViewBag.Title != "login")
                     {
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Hi @HttpContext.Current.User.Identity.Name!<b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                              
+
                                 @if (HttpContext.Current.User.Identity.Name == "admin")
                                 {
 
@@ -118,7 +119,7 @@
             <section>
                 <p>Unlimited file upload </p>
                 <ul class="actions">
-                    <li><a href="~/Post/index"class="button special">Get started</a></li>
+                    <li><a href="~/Post/index" class="button special">Get started</a></li>
                 </ul>
             </section>
         </div>
@@ -137,7 +138,7 @@
                         <h2>@Item.Title</h2>
                         <p style="overflow: scroll;">@Item.Description</p>
                         <ul class="actions">
-                            <li><a target="_blank" href="@Item.ReferenceURL" class="button alt">Learn more</a></li>
+                            <li><a target="_blank" href="~/File/@Item." class="button alt">Download</a></li>
                         </ul>
                     </section>
                     <section>

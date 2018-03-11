@@ -3,6 +3,7 @@ using MvcApplication1.Models.OTP_Generate;
 using MvcApplication1.Models.Post.Application;
 using MvcApplication1.Models.Post.Data;
 using MvcApplication1.Models.Property;
+using MvcApplication1.Models.SMTP;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -107,7 +108,15 @@ namespace MvcApplication1.Controllers
                     List<int> PartnerIds = objFileDataLayer.GetPartnerIds(FileId);
                     objFileDataLayer.GenerateOTP(PartnerIds, RequestId);
                     string AccessStatus = objFileDataLayer.AuthorizeOTP(RequestId);
-                    //Sent Mails
+                    User_Controller userData = new User_Controller(); 
+                    
+
+                    foreach (var partnerid in PartnerIds)
+                    {
+                        int GetOtp = userData.GetOtp(RequestId, partnerid);
+                        SMTPProtocol.NotifyPartners("Notification", string.Format("You partners is waiting for the file ,Please find the OTP : {0}", GetOtp), userData.GetEmailbyPartnerId(partnerid.ToString()));
+                    }
+
                     if (AccessStatus == "NoUserPending" && AccessStatus!="")
                     {
                         string fileName = objFileDataLayer.GetFileName(FileId);

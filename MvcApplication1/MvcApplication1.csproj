@@ -122,6 +122,7 @@
     <Compile Include="Models\Post\Data\User.cs" />
     <Compile Include="Models\Post\Data\UserController.cs" />
     <Compile Include="Models\Post\Property\Post.cs" />
+    <Compile Include="Models\SMTP\SMTPProtocol.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
