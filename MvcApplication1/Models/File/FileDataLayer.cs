@@ -360,6 +360,57 @@ namespace MvcApplication1.Models.File
                 }
             }
         }
+       
+        internal void RestoreRequestTransactions(int RequestId)
+        {
+            using (SqlConnection con = new SqlConnection(ConnectSQL.GetConnectionString()))
+            {
+                try
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand("UPDATE RequestTransaction SET IsOTPVerified=0,OTP=@OTP Where RequestId=@RequestId UPDATE RequestFile SET IsDeleted=0 Where RequestId=@RequestId", con);
+                    cmd.Parameters.AddWithValue("@RequestId", RequestId);
+                    cmd.Parameters.AddWithValue("@OTP", RandomGenerate.Otp);
+                    cmd.ExecuteNonQuery();
+
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                finally
+                {
+                    con.Close();
+                }
+            }
+        }
+
+        internal void AuthenticateOTP(int RequestId, int UserId, string OTP)
+        {
+            using (SqlConnection con = new SqlConnection(ConnectSQL.GetConnectionString()))
+            {
+                try
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand("UPDATE RequestTransaction Set IsOTPVerified=1 Where PartnerId=@PartnerId AND RequestId=@RequestId AND OTP=@OTP", con);
+                    cmd.Parameters.AddWithValue("@RequestId", RequestId);
+                    cmd.Parameters.AddWithValue("@PartnerId", UserId);
+                    cmd.Parameters.AddWithValue("@OTP", OTP);
+                    cmd.ExecuteNonQuery();
+
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                finally
+                {
+                    con.Close();
+                }
+            }
+        }
     }
 
 

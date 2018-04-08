@@ -12,10 +12,10 @@ namespace InzNetworkCorrelation.Models.Post.DataLayer
     public class PostDataLayer
     {
 
-
+        string CS = DBConnect.ConnectionString();
         public int InsertPostToDB(InzPost ObjPost)
         {
-            string CS = DBConnect.ConnectionString();
+           
 
             try
             {
@@ -44,6 +44,32 @@ namespace InzNetworkCorrelation.Models.Post.DataLayer
                 return -2;
 
             }
+        }
+
+        public bool MakeMePartnerforMyFile(int FileId,int CurrentUserId)
+        {
+            bool IsSucess = true; ;
+            using (SqlConnection con = new SqlConnection(CS))
+            {
+                try
+                {
+                    con.Open();
+
+
+                }
+                catch (Exception)
+                {
+                    
+                    throw;
+                }
+                finally
+                {
+                    con.Close();
+                }
+            }
+
+
+            return IsSucess;
         }
 
 
@@ -101,7 +127,7 @@ namespace InzNetworkCorrelation.Models.Post.DataLayer
                 }
                 else
                 {
-                    cmd = new SqlCommand("select * from inz_Post where   PostID in (select PostID from PostShared where USERID=@UserID) order by 1 desc", con);
+                    cmd = new SqlCommand("select * from inz_Post where   PostID in (select FileId from FilePartners where USERID=@UserID AND Isdeleted=0) order by 1 desc", con);
                     cmd.Parameters.AddWithValue("@UserID", UserId);
                 }
 

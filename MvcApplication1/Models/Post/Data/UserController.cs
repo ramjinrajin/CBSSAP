@@ -321,7 +321,7 @@ namespace MvcApplication1.Models.Post.Data
                 try
                 {
                     con.Open();
-                    SqlCommand cmd = new SqlCommand("select EmailID from inz_USERS Where PartnerId=@PartnerId", con);
+                    SqlCommand cmd = new SqlCommand("select EmailID from inz_USERS Where UserID=@PartnerId", con);
                     cmd.Parameters.AddWithValue("@PartnerId", PartnerId);
                     SqlDataReader rdr = cmd.ExecuteReader();
                     while (rdr.Read())
@@ -362,7 +362,7 @@ namespace MvcApplication1.Models.Post.Data
                     {
                         while(rdr.Read())
                         {
-                            Otp=(int)rdr["Otp"];
+                            Otp=Convert.ToInt32(rdr["Otp"]);
                         }
                     }
                 }

@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data;
 using System.Data.SqlClient;
+using System.Configuration;
 
 
 namespace MvcApplication1.Controllers
@@ -31,7 +32,8 @@ namespace MvcApplication1.Controllers
             List<InzPost> ListPost = new List<InzPost>();
 
             ViewBag.UserName = System.Web.HttpContext.Current.User.Identity.Name;
-            if (ViewBag.UserName == "admin")
+            string AdminUserName = ConfigurationManager.AppSettings["AdminUsername"];
+            if (ViewBag.UserName == AdminUserName)
             {
                 ListPost = ObjPostService.GetOwnerAndSharedPost(0);
             }

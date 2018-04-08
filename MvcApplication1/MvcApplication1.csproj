@@ -157,6 +157,7 @@
     <Content Include="Contents\Scripts\_messageAlertHandler.js" />
     <Content Include="Contents\Style\ImpersonationStyle.css" />
     <Content Include="Contents\Style\NotificationStyle.css" />
+    <Content Include="Contents\Style\Filewaitloader.css" />
     <Content Include="Contents\Style\_alertStyle.css" />
     <Content Include="Contents\Style\_homeStyle.css" />
     <Content Include="Contents\Style\_loginStyle.css" />
@@ -240,6 +241,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\File\ViewPartner.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\File\EnterOtp.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\PublishProfiles\OTPSHARE.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

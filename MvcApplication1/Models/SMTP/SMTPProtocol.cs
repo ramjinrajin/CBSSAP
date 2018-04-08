@@ -9,27 +9,25 @@ namespace MvcApplication1.Models.SMTP
 {
 
 
-
-
-
     public static class SMTPProtocol
     {
         public static void NotifyPartners(string subject, string body, string emailTo)
         {
+          
             MailMessage message = new MailMessage();
-            message.From = new MailAddress("info@inzenjer.in");
-
+            message.From = new MailAddress("otp_admin@inzenjer.in");
             message.To.Add(new MailAddress(emailTo));
 
             message.Subject = subject;
-            message.Body = body;
+            message.Body =body;
+            message.IsBodyHtml = true;
 
             SmtpClient client = new SmtpClient();
-            client.Host = "relay-hosting.secureserver.net";
+            client.Host = "mail.inzenjer.in";
             client.Port = 25;
             client.UseDefaultCredentials = false;
             client.EnableSsl = false;
-            client.Credentials = new NetworkCredential("info@inzenjer.in", "InZenjer@2017");
+            client.Credentials = new NetworkCredential("otp_admin@inzenjer.in", "admin@1");
             client.Send(message);
         }
     }

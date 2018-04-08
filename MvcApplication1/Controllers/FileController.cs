@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -95,29 +96,171 @@ namespace MvcApplication1.Controllers
         }
 
         [HttpGet]
+
         public ActionResult Download(int FileId)
         {
-            
+            int RequestId = objFileDataLayer.GenerateRequest(FileId, USerConfig.GetUserID());
+            List<int> PartnerIds = objFileDataLayer.GetPartnerIds(FileId);
+            objFileDataLayer.GenerateOTP(PartnerIds, RequestId);
+            string AccessStatus = objFileDataLayer.AuthorizeOTP(RequestId);
+            if (AccessStatus == "NoUserPending" && AccessStatus != "")
+            {
+                objFileDataLayer.RestoreRequestTransactions(RequestId);
+                string fileName = objFileDataLayer.GetFileName(FileId);
+                if (fileName != "NIL")
+                {
+
+                    var filepath = Path.Combine(Server.MapPath("~/PostImage"), fileName);
+                    byte[] filedata = System.IO.File.ReadAllBytes(filepath);
+                    string contentType = MimeMapping.GetMimeMapping(filepath);
+
+                    var cd = new System.Net.Mime.ContentDisposition
+                    {
+                        FileName = fileName,
+                        Inline = true,
+                    };
+
+                    Response.AppendHeader("Content-Disposition", cd.ToString());
+                   // objFileDataLayer.DeleteRequest(RequestId);
+                    return File(filedata, contentType);
+                }
+                else
+                {
+                    ViewBag.Title = "File not found";
+                    ViewBag.Message = "The file you are trying to access is deleted";
+                    return View();
+                }
+            }
+            else
+            {
+                TempData["FileId"] = FileId;
+                ViewBag.FileId = FileId;
+                ViewBag.PartnerWaiting = AccessStatus;
+                return View();
+            }
+
+
+
+         
+
+            //int RequestId = objFileDataLayer.GenerateRequest(FileId, USerConfig.GetUserID());
+            //string AccessStatus = objFileDataLayer.AuthorizeOTP(RequestId);
+            //TempData["FileId"] = FileId;
+            //if (AccessStatus == "NoUserPending" && AccessStatus != "")
+            //{
+            //    return RedirectToAction("Load", FileId);
+            //}
+            //else
+            //{
+            //    return View();
+
+            //}
+
+
+        }
+
+
+
+        //public async Task<ActionResult> AsyncDownload(int FileId)
+        //{
+        //    await Task.Run(() => PrepareFile(FileId));
+
+        //    return Json(new { success = 1 }, JsonRequestBehavior.AllowGet);
+        //}
+
+
+        //public async void PrepareFile(int FileId)
+        //{
+
+
+        //    Task<bool> task = new Task<bool>(SyncService);
+        //    task.Start();
+        //    bool FileDownloaded = await task;
+
+        //}
+
+        public bool SyncService()
+        {
             try
             {
-                int CurrentUserId=USerConfig.GetUserID();
-                if (objFileDataLayer.FileUserAccess(FileId,CurrentUserId))
+                if (Convert.ToBoolean(Session["OTPsent"]) == false)
+                {
+                    int FileId = Convert.ToInt32(TempData["FileId"]);
+                    int CurrentUserId = USerConfig.GetUserID();
+                    if (objFileDataLayer.FileUserAccess(FileId, CurrentUserId))
+                    {
+
+                        int RequestId = objFileDataLayer.GenerateRequest(FileId, CurrentUserId);
+                        List<int> PartnerIds = objFileDataLayer.GetPartnerIds(FileId);
+                        objFileDataLayer.GenerateOTP(PartnerIds, RequestId);
+                        string AccessStatus = objFileDataLayer.AuthorizeOTP(RequestId);//Until and unless we get NouserPending status the file will not download
+                        User_Controller userData = new User_Controller();
+
+
+                        foreach (var partnerid in PartnerIds)
+                        {
+                            int GetOtp = userData.GetOtp(RequestId, partnerid);
+                            SMTPProtocol.NotifyPartners("Notification", string.Format("You partners is waiting for the file ,Please find the OTP : {0} \n Use this link to enter the OTP : /File/EnterOtp?RequestId={1}&UserId={2}", GetOtp, RequestId, partnerid), userData.GetEmailbyPartnerId(partnerid.ToString()));
+                        }
+                    }
+
+                    Session["OTPsent"] = "true";
+
+                }
+
+
+            }
+            catch (Exception)
+            {
+                Session["OTPsent"] = "false";
+                throw;
+            }
+
+            return true;
+        }
+
+
+        [HttpGet]
+        public ActionResult EnterOtp(int RequestId,int UserId)
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult EnterOtp(FormCollection frm,int RequestId,int UserId)
+        {
+            string OTP=frm["OTP"].ToString();
+            objFileDataLayer.AuthenticateOTP(RequestId, UserId, OTP);
+            return View();
+        }
+
+
+        [HttpGet]
+        [ActionName("Load")]
+        public ActionResult Download()
+        {
+            int FileId = Convert.ToInt32(TempData["FileId"]);
+            try
+            {
+                int CurrentUserId = USerConfig.GetUserID();
+                if (objFileDataLayer.FileUserAccess(FileId, CurrentUserId))
                 {
 
                     int RequestId = objFileDataLayer.GenerateRequest(FileId, CurrentUserId);
                     List<int> PartnerIds = objFileDataLayer.GetPartnerIds(FileId);
                     objFileDataLayer.GenerateOTP(PartnerIds, RequestId);
-                    string AccessStatus = objFileDataLayer.AuthorizeOTP(RequestId);
-                    User_Controller userData = new User_Controller(); 
-                    
+                    string AccessStatus = objFileDataLayer.AuthorizeOTP(RequestId);//Until and unless we get NouserPending status the file will not download
+                    User_Controller userData = new User_Controller();
+
 
                     foreach (var partnerid in PartnerIds)
                     {
                         int GetOtp = userData.GetOtp(RequestId, partnerid);
-                        SMTPProtocol.NotifyPartners("Notification", string.Format("You partners is waiting for the file ,Please find the OTP : {0}", GetOtp), userData.GetEmailbyPartnerId(partnerid.ToString()));
+                        SMTPProtocol.NotifyPartners("Notification", string.Format("You partners is waiting for the file ,Please find the OTP : {0} .Use the following url to enter your ", GetOtp), userData.GetEmailbyPartnerId(partnerid.ToString()));
                     }
 
-                    if (AccessStatus == "NoUserPending" && AccessStatus!="")
+                    if (AccessStatus == "NoUserPending" && AccessStatus != "")
                     {
                         string fileName = objFileDataLayer.GetFileName(FileId);
                         if (fileName != "NIL")
@@ -148,8 +291,8 @@ namespace MvcApplication1.Controllers
                     {
                         return View();
                     }
-                    
-           
+
+
                 }
                 else
                 {

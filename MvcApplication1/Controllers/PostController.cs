@@ -1,4 +1,5 @@
-﻿using MvcApplication1.Models.Post.Application;
+﻿using MvcApplication1.Models.File;
+using MvcApplication1.Models.Post.Application;
 using MvcApplication1.Models.Post.Data;
 using MvcApplication1.Models.Property;
 using System;
@@ -55,20 +56,25 @@ namespace MvcApplication1.Controllers
 
 
             Dictionary<int, string> Response = ObjPostSericeLayer.SavePost(_post);
+        
+       
             string getResponse="";
-            int GetReturnCode=0;
+            int GetPostIdAsReturnCode=0;
             foreach (var pair in Response)
             {
-                GetReturnCode = pair.Key;
+                GetPostIdAsReturnCode = pair.Key;
                 getResponse = pair.Value;
             }
 
+             FileDataLayer objFileDataLayer = new FileDataLayer();
+             objFileDataLayer.SaveFile(USerConfig.GetUserID(), GetPostIdAsReturnCode);
+
             TempData["AlertMessage"] = getResponse;
             ViewBag.Categories = ObjPostSericeLayer.GetCategories();
-            if (GetReturnCode != -1 || GetReturnCode != -2)
+            if (GetPostIdAsReturnCode != -1 || GetPostIdAsReturnCode != -2)
             {
                 InzPost SavedPost = new InzPost();
-                SavedPost.PostId = GetReturnCode;
+                SavedPost.PostId = GetPostIdAsReturnCode;
                 return View();
             }
             else
